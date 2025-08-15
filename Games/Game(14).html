@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<title>صيد الكنز في الغابة 🌲💰</title>
+<style>
+  body {
+    font-family: sans-serif;
+    direction: rtl;
+    text-align: center;
+    background: #234d20;
+    color: white;
+    margin-top: 20px;
+  }
+  #grid {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+    gap: 2px;
+    justify-content: center;
+    margin: 20px auto;
+  }
+  .cell {
+    width: 50px;
+    height: 50px;
+    background: #4caf50;
+    border-radius: 6px;
+    position: relative;
+  }
+  .player {
+    background: #ffeb3b;
+    border-radius: 50%;
+  }
+  .treasure {
+    background: gold;
+    border-radius: 6px;
+    box-shadow: 0 0 8px 2px gold;
+  }
+  .trap {
+    background: #a52a2a;
+    border-radius: 6px;
+  }
+  #score {
+    font-size: 24px;
+    margin-top: 15px;
+  }
+</style>
+</head>
+<body>
+
+<h1>صيد الكنز في الغابة 🌲💰</h1>
+<p>استخدم الأسهم لتحرك، اجمع الكنوز وتجنب الأفخاخ!</p>
+<div id="grid"></div>
+<div id="score">النقاط: 0</div>
+<div id="message"></div>
+<!-- أضيف تحت النقاط أزرار القدرات -->
+<div style="margin-top: 15px;">
+    <button id="revealTrapsBtn">🔦 كشف الفخاخ</button>
+    <button id="speedBoostBtn">⚡ سرعة مضاعفة</button>
+  </div>  
+<script>
+  const gridSize = 8;
+  const grid = document.getElementById("grid");
+  let cells = [];
+  let playerPos = { x: 0, y: 0 };
+  let treasures = [];
+  let traps = [];
+  let score = 0;
+  let gameOver = false;
+
+  function createGrid() {
+    grid.innerHTML = '';
+    cells = [];
+    for (let y = 0; y < gridSize; y++) {
+      const row = [];
+      for (let x = 0; x < gridSize; x++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        grid.appendChild(cell);
+        row.push(cell);
+      }
+      cells.push(row);
+    }
+  }
+
+  function draw() {
+    for (let y = 0; y < gridSize; y++) {
+      for (let x = 0; x < gridSize; x++) {
+        cells[y][x].className = 'cell';
+        cells[y][x].textContent = '';
+      }
+    }
+    // رسم الكنوز
+    treasures.forEach(pos => {
+      cells[pos.y][pos.x].classList.add("treasure");
+    });
+    // رسم الأفخاخ
+    traps.forEach(pos => {
+      cells[pos.y][pos.x].classList.add("trap");
+    });
+    // رسم اللاعب
+    cells[playerPos.y][playerPos.x].classList.add("player");
+  }
+
+  function randomFreeCell() {
+    let x, y;
+    do {
+      x = Math.floor(Math.random() * gridSize);
+      y = Math.floor(Math.random() * gridSize);
+    } while (
+      (x === playerPos.x && y === playerPos.y) ||
+      treasures.some(t => t.x === x && t.y === y) ||
+      traps.some(t => t.x === x && t.y === y)
+    );
+    return { x, y };
+  }
+
+  function generateTreasures(count = 5) {
+    treasures = [];
+    for (let i = 0; i < count; i++) {
+      treasures.push(randomFreeCell());
+    }
+  }
+
+  function generateTraps(count = 5) {
+    traps = [];
+    for (let i = 0; i < count; i++) {
+      traps.push(randomFreeCell());
+    }
+  }
+
+  function movePlayer(dx, dy) {
+    if (gameOver) return;
+
+    const newX = playerPos.x + dx;
+    const newY = playerPos.y + dy;
+
+    if (newX < 0 || newX >= gridSize || newY < 0 || newY >= gridSize) return;
+
+    playerPos = { x: newX, y: newY };
+
+    // التحقق من كنز
+    for (let i = 0; i < treasures.length; i++) {
+      if (treasures[i].x === newX && treasures[i].y === newY) {
+        treasures.splice(i, 1);
+        score++;
+        updateScore();
+        showMessage("🎉 جمعت كنزًا!");
+        break;
+      }
+    }
+
+    // التحقق من فخ
+    if (traps.some(t => t.x === newX && t.y === newY)) {
+      gameOver = true;
+      showMessage("💥 وقعت في فخ! انتهت اللعبة!");
+      alert("💥 انتهت اللعبة! نقاطك: " + score);
+      return;
+    }
+
+    draw();
+  }
+
+  function updateScore() {
+    document.getElementById("score").textContent = "النقاط: " + score;
+  }
+
+  function showMessage(msg) {
+    const messageDiv = document.getElementById("message");
+    messageDiv.textContent = msg;
+    setTimeout(() => { messageDiv.textContent = ""; }, 2000);
+  }
+
+  function handleKeys(e) {
+    switch (e.key) {
+      case "ArrowUp": movePlayer(0, -1); break;
+      case "ArrowDown": movePlayer(0, 1); break;
+      case "ArrowLeft": movePlayer(-1, 0); break;
+      case "ArrowRight": movePlayer(1, 0); break;
+    }
+  }
+
+  // بدء اللعبة
+  createGrid();
+  generateTreasures();
+  generateTraps();
+  draw();
+  updateScore();
+
+  document.addEventListener("keydown", handleKeys);
+  </script>
+</body>
+</html>

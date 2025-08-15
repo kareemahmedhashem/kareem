@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>تحدي رياضيات ذكية</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      direction: rtl;
+      background-color: #f9f9f9;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    #question {
+      font-size: 28px;
+      margin: 20px;
+    }
+    input {
+      font-size: 24px;
+      padding: 8px;
+      width: 100px;
+      text-align: center;
+    }
+    button {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin-top: 15px;
+    }
+    #score, #timer {
+      font-size: 22px;
+      margin-top: 20px;
+    }
+    #result {
+      font-size: 24px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🧠 تحدي رياضيات ذكية</h1>
+<div id="question">اضغط "ابدأ" لبدء التحدي</div>
+
+<input type="number" id="answerInput" placeholder="؟" disabled />
+<br>
+<button onclick="submitAnswer()">تحقق</button>
+<button onclick="startGame()">ابدأ</button>
+
+<div id="result"></div>
+<div id="score">النقاط: 0</div>
+<div id="timer">الوقت: 10</div>
+
+<script>
+  let score = 0;
+  let currentAnswer = 0;
+  let timeLeft = 10;
+  let timerInterval;
+
+  function generateQuestion() {
+    const num1 = Math.floor(Math.random() * 20) + 1;
+    const num2 = Math.floor(Math.random() * 20) + 1;
+    const ops = ['+', '-', '*'];
+    const op = ops[Math.floor(Math.random() * ops.length)];
+
+    let questionText = `${num1} ${op} ${num2}`;
+    currentAnswer = eval(questionText); // احذر استخدام eval في تطبيقات حقيقية!
+
+    document.getElementById('question').textContent = `كم ناتج: ${questionText} ؟`;
+  }
+
+  function startGame() {
+    score = 0;
+    document.getElementById('score').textContent = `النقاط: ${score}`;
+    document.getElementById('answerInput').disabled = false;
+    document.getElementById('result').textContent = '';
+    generateQuestion();
+    startTimer();
+  }
+
+  function startTimer() {
+    timeLeft = 10;
+    document.getElementById('timer').textContent = `الوقت: ${timeLeft}`;
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      document.getElementById('timer').textContent = `الوقت: ${timeLeft}`;
+      if (timeLeft === 0) {
+        clearInterval(timerInterval);
+        endGame('⏰ انتهى الوقت!');
+      }
+    }, 1000);
+  }
+
+  function submitAnswer() {
+    const userAnswer = Number(document.getElementById('answerInput').value);
+    if (userAnswer === currentAnswer) {
+      score++;
+      document.getElementById('score').textContent = `النقاط: ${score}`;
+      document.getElementById('result').textContent = '✅ صحيح!';
+      document.getElementById('answerInput').value = '';
+      generateQuestion();
+      startTimer(); // إعادة العداد
+    } else {
+      endGame('❌ إجابة خاطئة!');
+    }
+  }
+
+  function endGame(message) {
+    clearInterval(timerInterval);
+    document.getElementById('result').textContent = message + ` النتيجة النهائية: ${score}`;
+    document.getElementById('question').textContent = 'اضغط "ابدأ" للعب من جديد';
+    document.getElementById('answerInput').disabled = true;
+  }
+</script>
+
+</body>
+</html>

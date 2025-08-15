@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>🧠 الهروب من المتاهة</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      direction: rtl;
+      text-align: center;
+      background: #222;
+      color: white;
+      margin-top: 20px;
+    }
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(10, 40px);
+      grid-template-rows: repeat(10, 40px);
+      gap: 2px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+    .cell {
+      width: 40px;
+      height: 40px;
+      background: #ccc;
+    }
+    .player {
+      background: limegreen;
+    }
+    .obstacle {
+      background: #333;
+    }
+    .exit {
+      background: lightgreen;
+    }
+    #status {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🏃‍♂️ الهروب من المتاهة</h1>
+<div id="grid"></div>
+<div id="status">استخدم الأسهم للتحرك نحو المخرج!</div>
+
+<script>
+  const gridSize = 10;
+  const grid = document.getElementById("grid");
+  let cells = [];
+  let playerPos = { x: 0, y: 0 };
+  let exitPos = { x: 9, y: 9 };
+  let obstacles = [];
+
+  // إنشاء الشبكة
+  function createGrid() {
+    grid.innerHTML = '';
+    cells = [];
+    for (let y = 0; y < gridSize; y++) {
+      const row = [];
+      for (let x = 0; x < gridSize; x++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        grid.appendChild(cell);
+        row.push(cell);
+      }
+      cells.push(row);
+    }
+  }
+
+  function draw() {
+    // تفريغ كل الخلايا
+    for (let y = 0; y < gridSize; y++) {
+      for (let x = 0; x < gridSize; x++) {
+        cells[y][x].className = 'cell';
+      }
+    }
+
+    // رسم العوائق
+    obstacles.forEach(pos => {
+      cells[pos.y][pos.x].classList.add("obstacle");
+    });
+
+    // رسم اللاعب والمخرج
+    cells[playerPos.y][playerPos.x].classList.add("player");
+    cells[exitPos.y][exitPos.x].classList.add("exit");
+  }
+
+  function movePlayer(dx, dy) {
+    const newX = playerPos.x + dx;
+    const newY = playerPos.y + dy;
+
+    if (
+      newX >= 0 && newX < gridSize &&
+      newY >= 0 && newY < gridSize &&
+      !isObstacle(newX, newY)
+    ) {
+      playerPos = { x: newX, y: newY };
+      draw();
+
+      if (playerPos.x === exitPos.x && playerPos.y === exitPos.y) {
+        status("🎉 فزت! وصلت للمخرج!");
+        clearInterval(exitTimer);
+        document.removeEventListener('keydown', handleKeys);
+      }
+    }
+  }
+
+  function isObstacle(x, y) {
+    return obstacles.some(pos => pos.x === x && pos.y === y);
+  }
+
+  function randomFreeCell() {
+    let x, y;
+    do {
+      x = Math.floor(Math.random() * gridSize);
+      y = Math.floor(Math.random() * gridSize);
+    } while ((x === playerPos.x && y === playerPos.y) || isObstacle(x, y));
+    return { x, y };
+  }
+
+  function generateObstacles(count = 20) {
+    obstacles = [];
+    for (let i = 0; i < count; i++) {
+      let pos = randomFreeCell();
+      obstacles.push(pos);
+    }
+  }
+
+  function changeExit() {
+    exitPos = randomFreeCell();
+    draw();
+    status("⏱️ تم تغيير مكان المخرج! أسرع!");
+  }
+
+  function status(msg) {
+    document.getElementById('status').textContent = msg;
+  }
+
+  function handleKeys(e) {
+    switch (e.key) {
+      case "ArrowUp": movePlayer(0, -1); break;
+      case "ArrowDown": movePlayer(0, 1); break;
+      case "ArrowLeft": movePlayer(-1, 0); break;
+      case "ArrowRight": movePlayer(1, 0); break;
+    }
+  }
+
+  // بدء اللعبة
+  createGrid();
+  generateObstacles();
+  draw();
+
+  // تغيير المخرج كل 10 ثوانٍ
+  const exitTimer = setInterval(() => {
+    changeExit();
+  }, 10000);
+
+  document.addEventListener('keydown', handleKeys);
+</script>
+
+</body>
+</html>

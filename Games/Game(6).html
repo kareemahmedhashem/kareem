@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<title>لعبة تركيب الكلمات</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    direction: rtl;
+    background-color: #f0f8ff;
+    padding: 30px;
+  }
+  #scrambledWord {
+    font-size: 36px;
+    margin-bottom: 20px;
+    letter-spacing: 10px;
+  }
+  input {
+    font-size: 24px;
+    padding: 5px 10px;
+    width: 300px;
+    text-align: center;
+  }
+  button {
+    font-size: 20px;
+    padding: 10px 20px;
+    margin: 15px;
+    cursor: pointer;
+  }
+  #message {
+    font-size: 22px;
+    margin-top: 15px;
+  }
+  #score {
+    font-size: 28px;
+    margin-top: 30px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h1>لعبة تركيب الكلمات</h1>
+<div id="scrambledWord"></div>
+
+<input type="text" id="userInput" placeholder="اكتب الكلمة الصحيحة هنا" autocomplete="off" />
+<br/>
+<button onclick="checkAnswer()">تحقق</button>
+<button onclick="nextWord()">كلمة جديدة</button>
+
+<div id="message"></div>
+<div id="score">النقاط: 0</div>
+
+<script>
+  const words = [
+    'كتاب',
+    'مدرسة',
+    'قلم',
+    'حاسوب',
+    'مدينة',
+    'شجرة',
+    'مكتب',
+    'نافذة',
+    'قهوة',
+    'سيارة'
+  ];
+
+  let currentWord = '';
+  let scrambled = '';
+  let score = 0;
+
+  function shuffleWord(word) {
+    const arr = word.split('');
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr.join('');
+  }
+
+  function nextWord() {
+    document.getElementById('message').textContent = '';
+    document.getElementById('userInput').value = '';
+    currentWord = words[Math.floor(Math.random() * words.length)];
+    scrambled = shuffleWord(currentWord);
+
+    // تأكد أن الكلمة المخلوطة ليست نفس الكلمة الأصلية
+    while (scrambled === currentWord) {
+      scrambled = shuffleWord(currentWord);
+    }
+
+    document.getElementById('scrambledWord').textContent = scrambled;
+  }
+
+  function checkAnswer() {
+    const userAnswer = document.getElementById('userInput').value.trim();
+    const message = document.getElementById('message');
+
+    if (!userAnswer) {
+      message.textContent = 'الرجاء إدخال الكلمة!';
+      return;
+    }
+
+    if (userAnswer === currentWord) {
+      score++;
+      message.textContent = '✅ صحيح! أحسنت!';
+      document.getElementById('score').textContent = 'النقاط: ' + score;
+      nextWord();
+    } else {
+      message.textContent = '❌ خاطئ، حاول مرة أخرى.';
+    }
+  }
+
+  // بدء اللعبة بكلمة أولى
+  nextWord();
+</script>
+
+</body>
+</html>
