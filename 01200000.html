@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Form</title>
+  <style>
+    * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #ff416c, #ffb347);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+.contact-form h2 {
+  margin-bottom: 0.5rem;
+}
+
+.contact-form p {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-group input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 12px;
+  background-color: #f5f5f5;
+  font-size: 1rem;
+}
+
+.form-message textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 12px;
+  background-color: #f5f5f5;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  resize: none;
+}
+
+button[type="submit"] {
+  background-color: #ff2e63;
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #e02555;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form class="contact-form">
+      <h2>Get in Touch</h2>
+      <p>Leave your message and we'll get back to you shortly.</p>
+      
+      <div class="form-group">
+        <input type="text" placeholder="John Doe" name="name" required />
+        <input type="email" placeholder="example@domain.com" name="email" required />
+      </div>
+
+      <div class="form-group">
+        <input type="tel" placeholder="+1-999-999-9999" name="phone" />
+        <input type="url" placeholder="https://example.com" name="website" />
+      </div>
+
+      <div class="form-message">
+        <textarea placeholder="Tell us briefly about your needs" name="message" rows="4"></textarea>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
