@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Grid — أمثلة شاملة</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      direction: rtl;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f0f0;
+      color: #000000;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #abb4ac;
+      color: rgb(0, 0, 0);
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav {
+      background-color: #000000;
+      text-align: center;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #9e9595;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .game-card {
+      background-color: rgb(255, 255, 255);
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgb(0, 0, 0);
+      overflow: hidden;
+      text-align: center;
+      color: #000000;
+
+      transition: transform 0.3s;
+    }
+
+    .game-card:hover {
+      transform: scale(1.05);
+    }
+
+    .game-card img {
+      width: 15%;
+      height: 180px;
+      border-radius: 15px;
+      object-fit: cover;
+    }
+    .game-title {
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000000;
+    }
+
+    /* Contact Form */
+    #contact {
+      background-color: #ffffff;
+      padding: 40px 20px;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .contact-form h2 {
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .contact-form p {
+      color: #000000;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .form-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+
+    .form-group input {
+      flex: 1 1 calc(50% - 1rem);
+      padding: 0.75rem 1rem;
+      border: 1px solid #d8d2d2;
+      border-radius: 12px;
+      background-color: #000000;
+      font-size: 1rem;
+      color: #ffffff;
+    }
+
+    .form-message textarea {
+      flex: 1 1 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d8d2d2;
+      border-radius: 12px;
+      background-color: #000000;
+      font-size: 1rem;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin-top: 1rem;
+      resize: none;
+      height: 100px;
+      width: 100%;
+    }
+
+    button[type="submit"] {
+      background-color: #000000;
+      color: rgb(255, 255, 255);
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: block;
+      margin: auto;
+      margin-top: 1rem;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #333;
+    }
+
+    footer {
+      background-color: #000000;
+      color: rgb(255, 255, 255);
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+    .crazy-cars {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #000000;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: inline-block;
+      padding: 10px 20px;
+      border: 2px solid #000000;
+      border-radius: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      text-align: center;
+      margin: auto;
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #000000;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .crazy-cars:hover {
+      background-color: #000000;
+      color: #ffffff;
+    }
+    .ddpdibn {
+      background-color: #ffffff;
+      color: #000000;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size:21px;
+    }
+    .ddpdibn:hover {
+      background-color: #000000;
+      color: #ffffff;
+    }
+    h1{
+        text-align: center;
+        color: #000000;
+    }
+    nav{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+       border-radius:15px;
+       background-color: #000000;
+       padding:10px; 
+       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+       
+    }
+    p{
+        text-align: center;
+        color: #000000;
+        font-size:25px;
+    }
+    img{
+        width: 100%;
+        height: 200px;
+        border-radius:15px;
+    }
+    </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- 2) repeat + minmax + auto-fit -->
+    <section class="demo">
+      <h2>2) repeat + minmax + auto-fit</h2>
+      <p class="desc">شبكة تتكيّف تلقائيًا: كل خانة بين 160px و 1fr — جرّب تصغير/تكبير العرض.</p>
+      <div class="grid g-repeat">
+        <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div>
+        <div class="cell">D</div><div class="cell">E</div><div class="cell">F</div>
+        <div class="cell">G</div><div class="cell">H</div><div class="cell">I</div>
+      </div>
+    </section>
+
+    <!-- 3) gaps -->
+    <section class="demo">
+      <h2>3) gap / row-gap / column-gap</h2>
+      <p class="desc">صفوف 4 أعمدة، بمسافات رأسية أكبر من الأفقية.</p>
+      <div class="grid g-gaps">
+        <div class="cell thin">1</div><div class="cell thin">2</div><div class="cell thin">3</div><div class="cell thin">4</div>
+        <div class="cell thin">5</div><div class="cell thin">6</div><div class="cell thin">7</div><div class="cell thin">8</div>
+      </div>
+    </section>
+
+    <!-- 4) template-areas -->
+    <section class="demo">
+      <h2>4) grid-template-areas (تخطيط صفحة)</h2>
+      <p class="desc">تسمية مناطق الشبكة: هيدر، شريط جانبي، محتوى، عمود جانبي، فوتر.</p>
+      <div class="grid g-areas">
+        <div class="cell a-header">Header</div>
+        <div class="cell a-sidebar">Sidebar</div>
+        <div class="cell a-main">Main</div>
+        <div class="cell a-aside">Aside</div>
+        <div class="cell a-footer">Footer</div>
+      </div>
+    </section>
+
+    <!-- 5) items alignment -->
+    <section class="demo">
+      <h2>5) justify-items / align-items / place-items</h2>
+      <p class="desc">محاذاة العناصر داخل خلاياها: هنا center/end.</p>
+      <div class="grid g-items" style="background:#f1f8ff">
+        <div class="cell thin">A</div><div class="cell thin">B</div><div class="cell thin">C</div>
+        <div class="cell thin">D</div><div class="cell thin">E</div><div class="cell thin">F</div>
+      </div>
+    </section>
+
+    <!-- 6) content alignment -->
+    <section class="demo">
+      <h2>6) justify-content / align-content / place-content</h2>
+      <p class="desc">محاذاة الشبكة ككل داخل الحاوية عند وجود مساحة إضافية (ارتفاع ثابت 260px).</p>
+      <div class="grid g-content">
+        <div class="cell thin">1</div><div class="cell thin">2</div><div class="cell thin">3</div>
+        <div class="cell thin">4</div><div class="cell thin">5</div><div class="cell thin">6</div>
+      </div>
+    </section>
+
+    <!-- 7) auto-flow -->
+    <section class="demo">
+      <h2>7) grid-auto-flow + implicit tracks</h2>
+      <p class="desc">Row/Column/Dense مع تحكم في حجم المسارات الضمنية.</p>
+      <div class="grid g-autoflow-row">
+        <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+        <div class="cell">4</div><div class="cell">5</div><div class="cell">6</div>
+        <div class="cell">7</div>
+      </div>
+
+      <div style="height:8px"></div>
+
+      <div class="grid g-autoflow-col inline-grid">
+        <div class="cell thin">A</div><div class="cell thin">B</div><div class="cell thin">C</div>
+        <div class="cell thin">D</div><div class="cell thin">E</div><div class="cell thin">F</div>
+        <div class="cell thin">G</div>
+      </div>
+
+      <div style="height:8px"></div>
+
+      <div class="grid g-autoflow-dense">
+        <div class="cell" style="grid-column:span 2">X(Span2)</div>
+        <div class="cell">Y</div><div class="cell">Z</div>
+        <div class="cell">K</div>
+        <div class="cell" style="grid-column:span 2">W(Span2)</div>
+        <div class="cell">Q</div>
+      </div>
+    </section>
+
+    <!-- 8) positioning -->
+    <section class="demo">
+      <h2>8) تموضع العناصر: grid-column/row + span</h2>
+      <p class="desc">اختيار الأسطر يدويًا والامتداد عبر أكثر من عمود/صف.</p>
+      <div class="grid g-position">
+        <div class="cell pos-1">1: col 1→3</div>
+        <div class="cell pos-2">2: col 3→7 & row 1→3</div>
+        <div class="cell pos-3">3: row 3 span 1 / col 2 span 2</div>
+        <div class="cell pos-4">4: col 5 span 2</div>
+        <div class="cell">5</div><div class="cell">6</div><div class="cell">7</div><div class="cell">8</div>
+      </div>
+    </section>
+
+    <!-- 9) self alignment -->
+    <section class="demo">
+      <h2>9) justify-self / align-self / place-self</h2>
+      <p class="desc">تجاوز محاذاة عامة لعناصر محددة.</p>
+      <div class="grid g-self" style="background:#f9fbff">
+        <div class="cell self-1">start/start</div>
+        <div class="cell self-2">center/center</div>
+        <div class="cell self-3">end/end</div>
+        <div class="cell">stretch</div>
+        <div class="cell">stretch</div>
+        <div class="cell">stretch</div>
+      </div>
+    </section>
+
+    <!-- 10) subgrid -->
+    <section class="demo">
+      <h2>10) Subgrid (متقدم)</h2>
+      <p class="desc">الطفل يرث أعمدة الأب للحفاظ على محاذاة متناسقة.</p>
+      <div class="parent">
+        <div class="cell">أب (col1)</div>
+        <div class="cell">أب (col2)</div>
+        <div class="cell">أب (col3)</div>
+        <div class="child">
+          <div class="cell">ابن 1</div>
+          <div class="cell">ابن 2</div>
+          <div class="cell">ابن 3</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11) Gallery شائع -->
+    <section class="demo">
+      <h2>11) شبكة Cards Responsive (auto-fit + minmax)</h2>
+      <p class="desc">نمط شائع لبطاقات تتكيّف مع العرض.</p>
+      <div class="grid g-gallery">
+        <div class="cell">Card 1</div><div class="cell">Card 2</div><div class="cell">Card 3</div>
+        <div class="cell">Card 4</div><div class="cell">Card 5</div><div class="cell">Card 6</div>
+        <div class="cell">Card 7</div><div class="cell">Card 8</div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
